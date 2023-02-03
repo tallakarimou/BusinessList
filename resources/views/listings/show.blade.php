@@ -1,6 +1,7 @@
 @extends('dashboard')
 
 @section('content')
+<button class="bg-green-500 rounded absolute inline-block"> <a href="{{ route('listings.index') }}"> BACK</a> </button>
 
   <div class="grid grid-cols-6 gap-4">
     <div class="col-start-3 col-span-2 ">
@@ -17,7 +18,7 @@
         </p>
 
         <label class="bg-blue-500 rounded font-bold">website:</label><br>
-        
+
         <p>
             {{ $listing->web }}
         </p>
@@ -34,12 +35,12 @@
         <label class="bg-blue-500 rounded font-bold">Bio:</label><br>
 
         <p>
-           {{ $listing->bio }}    
-        </p>  
+           {{ $listing->bio }}
+        </p>
 
 
  </div>
   </div>
-        
+
 
 @endsection

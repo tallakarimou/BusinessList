@@ -15,7 +15,8 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::get('/', [ListingController::class,'index']);
+Route::get('/', [ListingController::class,'index'])->name('listings.index');
+Route::get('listings/{id}', [ListingController::class,'show'])->name('listings.show');
 
 
 
@@ -25,7 +26,7 @@ Route::group(['middleware'=>'auth'],function(){
         //Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
 
     Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');;
-    Route::resource('listings', ListingController::class)->except(['index']);
+    Route::resource('listings', ListingController::class)->except(['index','show']);
 
 });
 
