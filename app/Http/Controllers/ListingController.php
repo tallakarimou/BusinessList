@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ListingRequest;
+use App\Models\Listing;
 use Illuminate\Http\Request;
 
 class ListingController extends Controller
@@ -13,7 +15,9 @@ class ListingController extends Controller
      */
     public function index()
     {
-        //
+        $listings = Listing::all();
+
+        return view('listings.index', compact('listings'));
     }
 
     /**
@@ -23,7 +27,7 @@ class ListingController extends Controller
      */
     public function create()
     {
-        //
+        return view('listings.create');
     }
 
     /**
@@ -32,9 +36,21 @@ class ListingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ListingRequest $request)
     {
-        //
+
+       $listing = Listing::create(
+        [
+            'user_id'=> auth()->id(),
+            'name' => $request->name,
+            'email' => $request->email,
+            'website' =>$request->web,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'bio' => $request->bio,
+
+        ]);
+        return redirect()->route('dashboard')->with('success', 'successful stored');
     }
 
     /**
@@ -45,7 +61,8 @@ class ListingController extends Controller
      */
     public function show($id)
     {
-        //
+        $listing = Listing::find($id);
+        return view('listings.show',compact('listing'));
     }
 
     /**
@@ -56,7 +73,8 @@ class ListingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $listing = Listing::find($id);
+        return view('listings.edit',compact('listing'));
     }
 
     /**
@@ -68,7 +86,18 @@ class ListingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $listing = Listing::find($id);
+        $listing->name = $request->name;
+        $listing->email = $request->email;
+        $listing->web = $request->web;
+        $listing->phone = $request->phone;
+        $listing->address = $request->address;
+        $listing->bio = $request->bio;
+
+        $listing->save();
+
+        return redirect()->route('listings.index');
+
     }
 
     /**
@@ -79,6 +108,10 @@ class ListingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $listing = Listing::find($id);
+        
+        $listing->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Listing successful delete');
     }
 }

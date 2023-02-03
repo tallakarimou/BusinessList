@@ -14,11 +14,16 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
         <!-- Scripts -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
         <script src="{{ asset('js/app.js') }}" defer></script>
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
+        @if(Auth::check())
             @include('layouts.navigation')
+        @endif
 
             <!-- Page Heading -->
             <header class="bg-white shadow">
